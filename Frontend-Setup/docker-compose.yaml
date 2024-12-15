@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  tests:
+    container_name: food-delivery-app
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+      # args:
+      #   - NEXT_PUBLIC_BASE_PATH=/languages-tests-app
+    env_file:
+      - .env.dev
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+    - ./src:/app/src
+    - ./public:/app/public
+    networks:
+    - food-delivery-microservice-shared-network
+networks:
+  food-delivery-microservice-shared-network:
+    external: true
