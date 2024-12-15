@@ -2,8 +2,8 @@ const ProductService = require('../service/product.service');
 
 const getProducts = async (req, res) => {
     try {
-        const { page, limit, flag, category, search } = req.query;
-        const products = await ProductService.getProducts({ page, limit, flag, category, search });
+        const { page, limit, search } = req.query;
+        const products = await ProductService.getProducts({ page, limit, search });
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json(error);

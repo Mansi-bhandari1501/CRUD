@@ -20,7 +20,6 @@ function AddRestaurantForm(props) {
         price: selectedRow?.price,
         tag: selectedRow?.tag,
         category: selectedRow?.category || [],
-        // cuisine: selectedRow?.cuisine || [],
         amount: selectedRow?.amount,
         desc: selectedRow?.desc,
         image: selectedRow?.image,
@@ -49,8 +48,8 @@ function AddRestaurantForm(props) {
   };
 
   const handleImageChange = (event) => {
-    console.log(event)
-    const file = event.target.image;
+    const file = event.target.files[0];
+    console.log(file)
     if (file) {
       if (file.type.startsWith('image/') && file.size <= 2 * 1024 * 1024) {
         setSelectedImage(file);
@@ -86,7 +85,7 @@ function AddRestaurantForm(props) {
     }
 
     const id = selectedRow?._id;
-console.log("form",id);
+
     try {
       const res = selectedRow
         ?  dispatch(updateRestaurantAction({ data: formData, id }))
@@ -125,7 +124,7 @@ console.log("form",id);
             type="file"
             style={{ display: 'none' }}
             onChange={handleImageChange}
-            name="image"
+            name="files"
           />
           <label htmlFor="image-upload">
             <Button variant="contained" component="span" startIcon={<UploadFile />}>

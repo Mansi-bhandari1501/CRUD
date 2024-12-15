@@ -1,23 +1,19 @@
-// services/productService.js
-const UsersModel = require("../models/product.model");
+const ProductModel = require("../models/product.model");
 
 const getProducts = async ({ page, limit, flag, category, search }) => {
   const filter = {};
-  if (category) filter.category = category;
   if (search) filter.name = { $regex: search, $options: "i" };
 
-  const n = (page - 1) * limit || 0;
-  const query = UsersModel.find(filter).skip(n).limit(parseInt(limit));
-  if (flag) query.sort({ price: parseInt(flag) });
-
+  const offset = (page - 1) * limit || 0;
+  const query = ProductModel.find(filter).skip(offset).limit(parseInt(limit));
   const data = await query.exec();
-  const count = await UsersModel.countDocuments(filter);
+  const count = await ProductModel.countDocuments(filter);
 
   return { count, data };
 };
 
 const getProductById = async (id) => {
-  return await UsersModel.findById(id);
+  return await ProductModel.findById(id);
 };
 
 const createProduct = async (productData, file) => {
@@ -28,7 +24,7 @@ const createProduct = async (productData, file) => {
       message: "please fill all the required fields",
     });
   }
-  return await UsersModel.create({
+  return await ProductModel.create({
     name,
     tag,
     category,
@@ -41,7 +37,7 @@ const createProduct = async (productData, file) => {
 
 const updateProduct = async (id, updatedData,file) => {
   const { name, tag, category, amount, price, desc } = updatedData;
-  return await UsersModel.findByIdAndUpdate(id, { 
+  return await ProductModel.findByIdAndUpdate(id, { 
     name,
     tag,
     category,
@@ -53,7 +49,7 @@ const updateProduct = async (id, updatedData,file) => {
 };
 
 const deleteProduct = async (id) => {
-  return await UsersModel.findByIdAndDelete(id);
+  return await ProductModel.findByIdAndDelete(id);
 };
 
 module.exports = {

@@ -10,6 +10,16 @@ dotenv.config();
 const app = express();
 connectDB();
 
+//if cors is not wokring then this
+// const corsOptions = {
+//     origin: (origin, callback) => {
+//         callback(null, true);
+//     },
+//     methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
+//     credentials: true,
+// };
+
+// else this one
 const corsOptions = {
     origin: "http://localhost:3000",
     methods: ["GET", "POST","DELETE","PUT","PATCH"],
