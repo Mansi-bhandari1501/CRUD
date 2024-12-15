@@ -13,7 +13,7 @@ import { postRestaurantAction, updateRestaurantAction } from '../../feature/rest
 import useNotification from '../../hooks/useNotification';
 
 function AddRestaurantForm(props) {
-  const { selectedRow, setOpenModal } = props;
+  const { selectedRow, setOpenModal,handleClose } = props;
   const defaultValues = selectedRow
     ? {
         name: selectedRow?.name,
@@ -88,13 +88,14 @@ function AddRestaurantForm(props) {
 
     try {
       const res = selectedRow
-        ?  dispatch(updateRestaurantAction({ data: formData, id }))
-        :  dispatch(postRestaurantAction(formData));
-
+        ?  await dispatch(updateRestaurantAction({ data: formData, id }))
+        : await dispatch(postRestaurantAction(formData));
+console.log(res)
       if (res?.meta?.requestStatus === 'fulfilled') {
         showNotification(selectedRow ? 'Updated successfully' : 'Created successfully', 'success');
         setSelectedImage(null);
         setOpenModal(false);
+        handleClose()
       }
 
       if (res?.meta?.requestStatus === 'rejected') {

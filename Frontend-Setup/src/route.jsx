@@ -9,18 +9,20 @@ import { useSelector } from "react-redux";
 import NotFound from "./pages/AccessDenial";
 
 const RouteComponent = () => {
-  const userRole = useSelector((state) => state?.user?.user?.role_details?.name);
   const token = useSelector((state) => state?.user?.token);
   console.log(token)
   return (
 <Routes>
   {!token ? (
-    <Route path="/" element={<BaseLayout />}>
-      <Route path="" element={<Navigate to="/login" />} />
-      <Route path="login" element={<Login />} />
-      <Route path="signup" element={<Signup />} />
-      <Route path="*" element={<Navigate to="/login" />} />
-    </Route>
+    // <Route path="/">
+    <>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          {/* Catch-all route to redirect to login */}
+          <Route path="*" element={<Navigate to="/login" />} />
+    </>
+    // </Route>
   ) : (
     <>
       

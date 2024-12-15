@@ -23,11 +23,11 @@ export const getRestaurantAction = createAsyncThunk(getRestaurant, async () => {
     }
 })
 
-export const getAllRestaurantAction = createAsyncThunk(getAllRestaurant, async ({pagination,search_term},{rejectWithValue}) => {
+export const getAllRestaurantAction = createAsyncThunk(getAllRestaurant, async ({pagination,search},{rejectWithValue}) => {
     try {
         const {page, limit} = pagination;
-        if(!search_term) search_term = "";
-        const response = await getAllRestaurantService(page,limit,search_term);
+        if(!search) search = "";
+        const response = await getAllRestaurantService(page,limit,search);
         console.log("response.data",response.data)
         return response.data;
     } catch (error) {
